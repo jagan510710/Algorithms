@@ -1,0 +1,68 @@
+
+
+extension String {
+  var lowerCaseRemovedSpace: String {
+        return self.filter { $0 != " " }.lowercased()
+    }
+    var removeSpecialCharsFromString:String {
+         let chars = Set("abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLKMNOPQRSTUVWXYZ1234567890")
+    return String(self.filter { chars.contains($0) })
+}
+    var isPal: Bool {
+        return  self.lowerCaseRemovedSpace.removeSpecialCharsFromString == String(self.reversed()).lowerCaseRemovedSpace.removeSpecialCharsFromString
+    }
+}
+
+
+protocol GenericProtocol {
+func isPalindrome(_ word: String) -> (Bool,String)
+}
+extension GenericProtocol
+{
+
+func isPalindrome(_ word: String) -> (Bool,String) {
+    let word = word.lowerCaseRemovedSpace.removeSpecialCharsFromString
+    for (i, character) in word.enumerated() {
+        if character != Array(word)[word.count-i-1] {
+            return (false,"")
+        }
+    }
+    let c = (word.count % 2 == 0) ? "" : String(Array(word)[word.count/2])
+    return (true,word.count%2 == 0 ? "" : c)
+}
+
+}
+
+
+extension String : GenericProtocol
+{
+    func palindromeResult()->(Bool,String)
+    {
+      return isPalindrome(self) 
+    }
+}
+
+extension Int:GenericProtocol
+{
+ 
+   func palindromeResult()->(Bool,String)
+    {
+      return isPalindrome(String(self))
+    }
+    
+
+}
+
+print(("Was it a car or a cat I saw").palindromeResult().1)
+print(("Was it a car or a cat I saw").palindromeResult().0.description)
+
+print(12321.palindromeResult().1)
+print(12321.palindromeResult().0.description)
+
+OUTPUT
+
+     O
+     TRUE
+
+     3
+     TRUE
