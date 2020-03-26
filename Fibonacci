@@ -1,0 +1,12 @@
+func fib(_ n:Int)-> [Int]?
+{
+
+   var fibArr = [0,1]
+     guard n>=1 else {return fibArr}
+    (2...n).forEach{ i in 
+      fibArr.append(fibArr[i-1] + fibArr[i-2])
+    }
+  return fibArr
+}
+
+print(fib(2) ?? [])
