@@ -10,3 +10,44 @@ func fib(_ n:Int)-> [Int]?
 }
 
 print(fib(2) ?? [])
+
+
+///////////// With Sequence Protocol    ////////////////
+
+struct FibsSequence: Sequence {
+     var n: Int
+    
+    init(_ n: Int) {
+        self.n = n
+    }
+    
+    func makeIterator() -> FibsIterator {
+        return FibsIterator(n)
+    }
+} 
+
+struct FibsIterator: IteratorProtocol {
+     var tup = (0, 1)
+     var n: Int
+     var counter = 0
+    
+    init(_ n: Int) {
+        self.n = n
+    }
+    
+    mutating func next() -> Int? {
+        guard n > counter else {return nil}
+        guard n > 0 else {return nil}
+        
+        let nxtN = tup.0
+        tup = (tup.1, tup.0 + tup.1)
+        counter += 1
+        print(tup)
+        return nxtN
+    }
+}
+
+
+for  fib in FibsSequence(11).enumerated() {
+    print("fib: \(fib.element)")
+}
