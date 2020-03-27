@@ -1,16 +1,23 @@
-func fib(_ n:Int)-> [Int]?
+func fib(_ n:Int)-> ([Int],Int?)
 {
 
    var fibArr = [0,1]
-     guard n>=1 else {return fibArr}
+     guard n>=1 else {return (fibArr,fibArr.last)}
     (2...n).forEach{ i in 
       fibArr.append(fibArr[i-1] + fibArr[i-2])
     }
-  return fibArr
+  return (fibArr,fibArr.last)
 }
 
-print(fib(2) ?? [])
+print(fib(6).0)
 
+print(fib(3).1 ?? 0)
+
+
+OutPut
+
+[0, 1, 1, 2, 3, 5, 8]
+2
 
 ///////////// With Sequence Protocol    ////////////////
 
