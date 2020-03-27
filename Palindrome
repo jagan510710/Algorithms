@@ -11,39 +11,42 @@ extension String {
     var isPal: Bool {
         return  self.lowerCaseRemovedSpace.removeSpecialCharsFromString == String(self.reversed()).lowerCaseRemovedSpace.removeSpecialCharsFromString
     }
+    var uniCharactersArr:Array<Character>
+     {
+       return Set(self).sorted()
+     }
 }
+
+
 
 
 protocol GenericProtocol {
-func isPalindrome(_ word: String) -> (Bool,String)
+func isPalindrome(_ word: String) -> (Bool,Array<Character>)
 }
 extension GenericProtocol
 {
-func isPalindrome(_ word: String) -> (Bool,String) {
+
+func isPalindrome(_ word: String) -> (Bool,Array<Character>) {
     let word = word.lowerCaseRemovedSpace.removeSpecialCharsFromString
-    //let charArr = Array(word)
-    var uniCharacters = ""
-    // for index in 0..<charArr.count/2
-    // {
-    //   if charArr[index] != charArr[charArr.count-1-index]
-    //   {
-    //     uniCharacters.append(charArr[index])
-    //     print(charArr[index])
-
-    //   }
-    // }
-    for (i, character) in word.enumerated() {
-        if character != Array(word)[word.count-i-1] {
-             uniCharacters.append(character)
-        }
-    }
-
-    if uniCharacters.count>0
+    let charArr = Array(word)
+    for index in 0..<charArr.count/2
     {
-       return (false,uniCharacters)
+      if charArr[index] != charArr[charArr.count-1-index]
+      {
+        return(false,word.uniCharactersArr)
+      }
     }
-    let c = (word.count % 2 == 0) ? "" : String(Array(word)[word.count/2])
-    return (true,word.count%2 == 0 ? "" : c)
+    // for (i, character) in word.enumerated() {
+    //     if character != Array(word)[word.count-i-1] {
+    //         // uniCharacters.append(character)
+    //                return (false,"")
+
+    //     }
+    // }
+
+  // }
+  
+    return (true,word.uniCharactersArr)
 }
 
 }
@@ -51,7 +54,7 @@ func isPalindrome(_ word: String) -> (Bool,String) {
 
 extension String : GenericProtocol
 {
-    func palindromeResult()->(Bool,String)
+    func palindromeResult()->(Bool,Array<Character>)
     {
       return isPalindrome(self) 
     }
@@ -60,7 +63,7 @@ extension String : GenericProtocol
 extension Int:GenericProtocol
 {
  
-   func palindromeResult()->(Bool,String)
+   func palindromeResult()->(Bool,Array<Character>)
     {
       return isPalindrome(String(self))
     }
@@ -68,16 +71,25 @@ extension Int:GenericProtocol
 
 }
 
+
+
+
+
+
 print(("Was it a car or a cat I saw").palindromeResult().1)
 print(("Was it a car or a cat I saw").palindromeResult().0.description)
-
+//"aetr".palindromeResult()
 print(12445321.palindromeResult().1)
 print(12445321.palindromeResult().0.description)
 
-OUTPUT
 
-     O
-     TRUE
 
-     4453
-     FALSE
+
+
+OutPut:
+
+["a", "c", "i", "o", "r", "s", "t", "w"]
+true
+["1", "2", "3", "4", "5"]
+false
+
