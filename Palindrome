@@ -19,14 +19,22 @@ func isPalindrome(_ word: String) -> (Bool,String)
 }
 extension GenericProtocol
 {
-
 func isPalindrome(_ word: String) -> (Bool,String) {
     let word = word.lowerCaseRemovedSpace.removeSpecialCharsFromString
-    for (i, character) in word.enumerated() {
-        if character != Array(word)[word.count-i-1] {
-            return (false,"")
-        }
+    let charArr = Array(word)
+    for index in 0..<charArr.count/2
+    {
+      if charArr[index] != charArr[charArr.count-1-index]
+      {
+                    return (false,"")
+
+      }
     }
+    // for (i, character) in word.enumerated() {
+    //     if character != Array(word)[word.count-i-1] {
+    //         return (false,"")
+    //     }
+    // }
     let c = (word.count % 2 == 0) ? "" : String(Array(word)[word.count/2])
     return (true,word.count%2 == 0 ? "" : c)
 }
