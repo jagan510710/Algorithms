@@ -72,18 +72,21 @@ extension Int:GenericProtocol
 }
 
 
-
-
+var palDict = [String:Int]()
+let arrWords = ["madam","we","civic","madam","ert","yes"]
+arrWords.forEach{(word) in
+    if word.palindromeResult().0 == true{
+          let count = palDict[word] ?? 0
+           palDict[word] = count + 1
+    }
+}
 
 
 print(("Was it a car or a cat I saw").palindromeResult().1)
 print(("Was it a car or a cat I saw").palindromeResult().0.description)
-//"aetr".palindromeResult()
 print(12445321.palindromeResult().1)
 print(12445321.palindromeResult().0.description)
-
-
-
+print(palDict)
 
 
 OutPut:
@@ -92,4 +95,4 @@ OutPut:
 true
 ["1", "2", "3", "4", "5"]
 false
-
+["civic": 1, "madam": 2]
