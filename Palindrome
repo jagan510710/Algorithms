@@ -21,20 +21,27 @@ extension GenericProtocol
 {
 func isPalindrome(_ word: String) -> (Bool,String) {
     let word = word.lowerCaseRemovedSpace.removeSpecialCharsFromString
-    let charArr = Array(word)
-    for index in 0..<charArr.count/2
-    {
-      if charArr[index] != charArr[charArr.count-1-index]
-      {
-                    return (false,"")
+    //let charArr = Array(word)
+    var uniCharacters = ""
+    // for index in 0..<charArr.count/2
+    // {
+    //   if charArr[index] != charArr[charArr.count-1-index]
+    //   {
+    //     uniCharacters.append(charArr[index])
+    //     print(charArr[index])
 
-      }
-    }
-    // for (i, character) in word.enumerated() {
-    //     if character != Array(word)[word.count-i-1] {
-    //         return (false,"")
-    //     }
+    //   }
     // }
+    for (i, character) in word.enumerated() {
+        if character != Array(word)[word.count-i-1] {
+             uniCharacters.append(character)
+        }
+    }
+
+    if uniCharacters.count>0
+    {
+       return (false,uniCharacters)
+    }
     let c = (word.count % 2 == 0) ? "" : String(Array(word)[word.count/2])
     return (true,word.count%2 == 0 ? "" : c)
 }
@@ -64,13 +71,13 @@ extension Int:GenericProtocol
 print(("Was it a car or a cat I saw").palindromeResult().1)
 print(("Was it a car or a cat I saw").palindromeResult().0.description)
 
-print(12321.palindromeResult().1)
-print(12321.palindromeResult().0.description)
+print(12445321.palindromeResult().1)
+print(12445321.palindromeResult().0.description)
 
 OUTPUT
 
      O
      TRUE
 
-     3
-     TRUE
+     4453
+     FALSE
