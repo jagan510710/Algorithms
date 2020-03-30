@@ -1,0 +1,129 @@
+extension String {
+ 
+    var removeSpecialCharsFromString:String {
+         let chars = Set("abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLKMNOPQRSTUVWXYZ1234567890")
+    return String(self.filter { chars.contains($0) })
+}
+   
+}
+func checkAnagram(_  fString:String, _ sString: String)-> Bool
+{
+  return fString.lowercased().sorted() == sString.lowercased().sorted()
+}
+
+
+ func getAllAnagramsFor(_ cStr : String, _ arrStr : [String]) -> [String]
+{
+   var arr = [String]()
+    arrStr.forEach{ (str) in
+        if checkAnagram(cStr,str)
+        {
+            arr.append(str)     
+         }
+      }
+     return  arr.filter { $0 != cStr }
+
+}
+
+ func getCount(_ cStr : String, _ arrStr : [String]) -> Int
+{
+  var count = 0
+   arrStr.forEach{ (str) in
+        if str == cStr
+        {
+           count =  count + 1   
+         }
+      }
+      return count
+}
+
+
+
+func toDisplayAnagramCountWithPhase()
+{
+  let sentence = "I love POOL game and three main types of loop: for.. next loop, do loop and while loop."
+
+let phase = "pool".lowercased()
+let splitStringArray = sentence.removeSpecialCharsFromString.split(separator: " ").map({ (substring) in
+    return String(substring).lowercased()
+})
+
+    var dict = [String: Int]()
+if let arr : [String] = getAllAnagramsFor(phase,splitStringArray), arr.count > 0
+  {
+      dict[phase] = getCount(phase,splitStringArray)
+      for str in arr
+      {
+              dict[str] = getCount(str,splitStringArray)
+      }
+   }
+     print(dict)
+
+}
+
+
+
+
+
+
+
+func toDispalyMatchIndex()
+{
+   let sentence = "cat dog god tca cer"
+let splitStringArray = sentence.removeSpecialCharsFromString.split(separator: " ").map({ (substring) in
+    return String(substring).lowercased()
+})
+  
+
+var allIndexes = [[String]]()
+
+
+ for item in splitStringArray
+{ 
+    var alredyPresent =  false
+    for items in allIndexes
+    {
+      if items.contains(item)
+      {
+        alredyPresent =  true
+      }
+    } 
+
+if let arr : [String] = getAllAnagramsFor(item,splitStringArray), arr.count > 0
+  {
+      var arrCurrent = [String]()
+      arrCurrent.append(item)
+      arrCurrent.append(contentsOf: arr)
+      if alredyPresent == false
+      {
+      allIndexes.append(arrCurrent)
+      }
+   }
+ }
+var output = [[Int]]()
+allIndexes.forEach{ items in
+            var arrCurrent = [Int]()
+             items.forEach{ item in
+              arrCurrent.append(splitStringArray.firstIndex(of: item) ?? 0)
+                }
+                output.append(arrCurrent)
+
+}
+
+ print(output)
+
+}
+ 
+
+
+print(checkAnagram("LISTEN","SILENT").description)
+
+toDisplayAnagramCountWithPhase()
+
+toDispalyMatchIndex()
+
+
+
+
+
+
