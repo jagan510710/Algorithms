@@ -1,4 +1,68 @@
+///// With Generics//////////
 
+
+
+extension StringProtocol  {
+    var digits: [Int] { return compactMap{ $0.wholeNumberValue } }
+}
+extension LosslessStringConvertible {
+    var string: String { return .init(self) }
+}
+extension Numeric where Self: LosslessStringConvertible {
+    var digits: [Int] {return  string.digits }
+}
+extension Character:Palindrome
+{
+
+}
+extension Int:Palindrome
+{
+
+}
+protocol Palindrome:Comparable
+{
+
+}
+
+extension Array where Element : Palindrome
+{
+  func isPalindrome()->Bool
+  {
+    if count > 1
+    {
+      return  palindrome(self,left:0,right:count-1)
+    }
+    return false
+  }
+  func palindrome<T:Palindrome>(_ arr:[T],left:Int,right:Int)->Bool
+  {
+    if left>right{return true}
+    if arr[left] != arr[right]
+    {
+     // print(arr[left])
+      return false
+    }
+    return palindrome(arr,left:left+1,right:right-1)
+  }
+}
+let string = "MAtDAM"
+let digits = Array(string)
+print(digits)
+print(digits.isPalindrome().description)
+
+let number = "1234321"
+print(number.digits)
+print(number.digits.isPalindrome().description)
+
+
+["M", "A", "t", "D", "A", "M"]
+false
+[1, 2, 3, 4, 3, 2, 1]
+true
+
+
+
+//////////////
 
 extension String {
   var lowerCaseRemovedSpace: String {
