@@ -6,12 +6,60 @@ extension String {
 }
    
 }
+
+///// To generate ///////
+
+extension String {
+    
+     mutating func swapAt(_ i: Int, _ j: Int)-> String {
+        var characters = Array(self)
+        characters.swapAt(i, j)
+        return String(characters)
+    }
+
+     mutating private func anagrams(from index: Int) -> [String] {
+        var anagramsArr = [String]()
+        for count in index..<self.count {
+            let newAnagram = self.swapAt( index, count)
+                anagramsArr.append(newAnagram)
+      }
+        
+        return anagramsArr
+    }
+    
+
+     public func generateAnagrams() -> [String] {
+        var finalAnagrams = [self]
+        for i in 0..<(self.count-1)
+        {
+           let currentArr = finalAnagrams
+            finalAnagrams.removeAll()
+            for var str in currentArr {
+                let arr = str.anagrams(from: i)
+                finalAnagrams.append(contentsOf: arr)
+            }
+        }
+     
+        return finalAnagrams
+    }
+}
+
+print("ABCD".generateAnagrams(),"ABCD".generateAnagrams().count)
+
+
+
+///// To check 2 strings /////////
 func checkAnagram(_  fString:String, _ sString: String)-> Bool
 {
   return fString.lowercased().sorted() == sString.lowercased().sorted()
 }
 
 
+
+
+
+
+////// to get count //////
  func getAllAnagramsFor(_ cStr : String, _ arrStr : [String]) -> [String]
 {
    var arr = [String]()
@@ -65,7 +113,7 @@ if let arr : [String] = getAllAnagramsFor(phase,splitStringArray), arr.count > 0
 
 
 
-
+////// To display all anagram indexes in array of array //////
 
 func toDispalyMatchIndex()
 {
@@ -121,6 +169,15 @@ print(checkAnagram("LISTEN","SILENT").description)
 toDisplayAnagramCountWithPhase()
 
 toDispalyMatchIndex()
+
+OUTPUT:
+
+
+["ABCD", "ABDC", "ACBD", "ACDB", "ADCB", "ADBC", "BACD", "BADC", "BCAD", "BCDA", "BDCA", "BDAC", "CBAD", "CBDA", "CABD", "CADB", "CDAB", "CDBA", "DBCA", "DBAC", "DCBA", "DCAB", "DACB", "DABC"] 24
+true
+["pool": 1, "loop": 4]
+[[0, 3], [1, 2]]
+
 
 
 
