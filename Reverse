@@ -8,6 +8,11 @@ extension Character {
 }
 
 
+
+
+
+/////   Noraml ///////
+
  let arr = "Ab,c,de!$"
  var word = Array(arr)
 
@@ -32,6 +37,57 @@ extension Character {
    }  
 
  print(String(word))
+ 
+ 
+ 
+ /////////// with array extension on character ///////
+ 
+ 
+ 
+  
+
+extension Character {
+ 
+    var isAlphanumeric:Bool {
+         let chars = Set("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLKMNOPQRSTUVWXYZ")
+         return chars.contains(self)
+    }
+   
+}
+
+
+extension Array where Element == Character {
+    mutating func reverse()
+    {
+      var left = 0
+      var right = self.count - 1
+       while left<right
+      {
+       if self[left].isAlphanumeric == false
+       {
+         left = left + 1
+       }
+       else if self[right].isAlphanumeric == false
+       {
+         right = right - 1
+       }
+       else
+       {
+         self.swapAt( left, right)
+         left = left + 1
+         right = right - 1
+       }
+   } 
+    }
+}
+
+
+ let arr = "Ab,c,de!$"
+ var word = Array(arr)
+print(String(word))
+word.reverse()
+ print(String(word))
+ 
  
  
  OUTPUT:
