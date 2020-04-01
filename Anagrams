@@ -44,7 +44,6 @@ extension String {
     }
 }
 
-print("ABCD".generateAnagrams(),"ABCD".generateAnagrams().count)
 
 
 
@@ -55,36 +54,14 @@ func checkAnagram(_  fString:String, _ sString: String)-> Bool
 }
 
 
-
-
-
-
 ////// to get count //////
  func getAllAnagramsFor(_ cStr : String, _ arrStr : [String]) -> [String]
 {
-   var arr = [String]()
-    arrStr.forEach{ (str) in
-        if checkAnagram(cStr,str)
-        {
-            arr.append(str)     
-         }
-      }
-     return  arr.filter { $0 != cStr }
+
+   let arr = arrStr.filter {checkAnagram(cStr,$0) == true}.filter { $0 != cStr }
+     return  arr
 
 }
-
- func getCount(_ cStr : String, _ arrStr : [String]) -> Int
-{
-  var count = 0
-   arrStr.forEach{ (str) in
-        if str == cStr
-        {
-           count =  count + 1   
-         }
-      }
-      return count
-}
-
 
 
 func toDisplayAnagramCountWithPhase()
@@ -97,14 +74,13 @@ let splitStringArray = sentence.removeSpecialCharsFromString.split(separator: " 
 })
 
     var dict = [String: Int]()
-if let arr : [String] = getAllAnagramsFor(phase,splitStringArray), arr.count > 0
-  {
-      dict[phase] = getCount(phase,splitStringArray)
-      for str in arr
-      {
-              dict[str] = getCount(str,splitStringArray)
-      }
-   }
+    if let arr : [String] = getAllAnagramsFor(phase,splitStringArray), arr.count > 0
+     {
+      dict[phase] = splitStringArray.filter{ $0 == phase}.count
+      arr.forEach{ str in 
+       dict[str] =  splitStringArray.filter{ $0 == str}.count
+        }
+     }
      print(dict)
 
 }
@@ -123,33 +99,26 @@ let splitStringArray = sentence.removeSpecialCharsFromString.split(separator: " 
 })
   
 
-var allIndexes = [[String]]()
+var anagramMappings = [[String]]()
 
 
  for item in splitStringArray
 { 
-    var alredyPresent =  false
-    for items in allIndexes
-    {
-      if items.contains(item)
-      {
-        alredyPresent =  true
-      }
-    } 
 
-if let arr : [String] = getAllAnagramsFor(item,splitStringArray), arr.count > 0
+   let alreadyPresent =  anagramMappings.filter{ $0.contains(item)}.count > 0
+  
+  if alreadyPresent == false,let arr : [String] = getAllAnagramsFor(item,splitStringArray), arr.count > 0
   {
       var arrCurrent = [String]()
       arrCurrent.append(item)
       arrCurrent.append(contentsOf: arr)
-      if alredyPresent == false
-      {
-      allIndexes.append(arrCurrent)
-      }
+      anagramMappings.append(arrCurrent)
+      
    }
  }
+ 
 var output = [[Int]]()
-allIndexes.forEach{ items in
+anagramMappings.forEach{ items in
             var arrCurrent = [Int]()
              items.forEach{ item in
               arrCurrent.append(splitStringArray.firstIndex(of: item) ?? 0)
@@ -163,12 +132,14 @@ allIndexes.forEach{ items in
 }
  
 
+print("ABCD".generateAnagrams(),"ABCD".generateAnagrams().count)
 
 print(checkAnagram("LISTEN","SILENT").description)
 
 toDisplayAnagramCountWithPhase()
 
 toDispalyMatchIndex()
+
 
 OUTPUT:
 
