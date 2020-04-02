@@ -1,0 +1,50 @@
+
+
+protocol MinMax
+{
+func minimum(_ arr : [Int]) -> Int?
+func maximum(_ arr : [Int]) -> Int?
+
+}
+extension MinMax
+{
+  func minimum(_ arr : [Int]) -> Int?
+  {
+     guard var min = arr.first else {
+       return nil
+      }  
+      for val in arr.dropFirst() {
+         min = val < min ? val : min
+        }
+      return min 
+   }
+
+    func maximum(_ arr : [Int]) -> Int?
+  {
+        guard var max = arr.first else {
+           return nil
+            }  
+            for val in arr.dropFirst() {
+                max = val > max ? val : max
+             }
+          return max 
+   }
+}
+struct ABC: MinMax
+{
+     func minElement(_ arr : [Int]) -> Int?
+     {
+       return minimum(arr)
+     }
+      func maxElement(_ arr : [Int]) -> Int?
+     {
+       return maximum(arr)
+     }
+}
+let array = [ 8, 3, 9, 4, 6 ]
+  
+
+ let a = ABC()
+
+ print(a.minElement(array) ?? 0 )
+ print(a.maxElement(array) ?? 0 )
