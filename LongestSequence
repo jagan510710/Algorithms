@@ -1,0 +1,53 @@
+extension Array where Element: Hashable {
+    func removingDuplicates() -> [Element] {
+        var addedDict = [Element: Bool]()
+
+        return filter {
+            addedDict.updateValue(true, forKey: $0) == nil
+        }
+    }
+
+    mutating func removeDuplicates() {
+        self = self.removingDuplicates()
+    }
+}
+
+
+
+let array = [11,12,13,12,16]
+var sortedArray = array.sorted()
+sortedArray.removeDuplicates()
+print(sortedArray)
+var arrCounts = [Int]()
+var subArray = [Int] ()
+subArray.append(sortedArray[0])
+ for i in 1 ..< sortedArray.count 
+ {
+       if let lastVal = subArray.last 
+       {
+          if (sortedArray[i] - lastVal) == 1
+           {
+                subArray.append(sortedArray[i])
+               if sortedArray.last == subArray.last
+               {
+                  arrCounts.append(subArray.count)
+
+               }
+           }
+            else
+            {
+              arrCounts.append(subArray.count)
+              subArray.removeAll()
+              subArray.append(sortedArray[i])
+            }
+  
+        }
+        else
+        {
+            arrCounts.append(subArray.count)
+
+        }
+   }
+
+
+print(arrCounts.max() ?? 0)
