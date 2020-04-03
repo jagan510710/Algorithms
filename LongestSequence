@@ -51,3 +51,27 @@ subArray.append(sortedArray[0])
 
 
 print(arrCounts.max() ?? 0)
+
+
+///// Without sort /////
+
+
+
+let arr = [1, 56, 58, 57, 89, 90, 92, 60, 94, 93, 91, 45]
+var maxL = 1
+for i in 0..<arr.count - 1
+{
+     var mn = arr[i]
+     var mx = arr[i]
+     for j in (i+1)..<arr.count
+     {
+        mn = min(mn,arr[j])
+        mx = max(mx,arr[j])
+        if (mx - mn) == (j - i)
+        {
+           maxL = max(maxL,(mx-mn+1))
+        }
+     }
+}
+
+print("Length of the longest contiguous subarray is \(maxL)")
