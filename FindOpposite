@@ -1,0 +1,40 @@
+  
+extension Array where Element: Hashable {
+    func removingDuplicates() -> [Element] {
+        var addedDict = [Element: Bool]()
+
+        return filter {
+            addedDict.updateValue(true, forKey: $0) == nil
+        }
+    }
+
+    mutating func removeDuplicates() {
+        self = self.removingDuplicates()
+    }
+}
+let array = [-2, 3, -2,4,2,44,55,-44,0,1,-1,-1,-7]
+
+var sortedArray = array.sorted()
+sortedArray.removeDuplicates()
+print(sortedArray)
+var arrCounts = [Int]()
+// check only negative values as we are already sorted
+
+for val in sortedArray
+{
+      if val < 0 && sortedArray.contains(-val)  {
+        arrCounts.append(val)
+
+      }
+}
+var arrayOutPut = [[Int]]()
+for val in arrCounts.reversed()
+{
+  var arr1 = [Int]()
+  arr1.append(val)
+  arr1.append(-val)
+  arrayOutPut.append(arr1)
+
+}
+
+print(arrayOutPut)
