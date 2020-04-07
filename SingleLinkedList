@@ -1,0 +1,87 @@
+
+public class Node<T> {
+    var value: T
+    var next: Node<T>?
+    
+    init(value: T) {
+        self.value = value
+    }
+}
+
+
+
+class SingleLinkedList<T>   {
+    
+    var head: Node<T>? 
+    
+   
+    
+    public func append(value: T) {
+        let newNode = Node(value: value)
+        if var h = head {
+            while h.next != nil {
+                h = h.next!
+            }
+            h.next = newNode
+            
+        } else {
+            head = newNode
+        }
+    }
+   
+
+
+
+
+    func deleteNode(position: Int)
+    {
+        if head == nil{
+        return
+        }
+        var temp = head
+        
+        if (position == 0)
+        {
+            head = temp?.next
+            return
+        }
+    
+        for _ in 0..<position-1 where temp != nil {
+            temp = temp?.next
+        }
+
+        if temp == nil || temp?.next == nil{
+           return
+        }
+
+        let nextToNextNode = temp?.next?.next
+        
+        temp?.next = nextToNextNode
+    }
+    
+    }
+    
+    
+
+extension SingleLinkedList : CustomStringConvertible {
+    var description: String {
+       
+    var text = ""
+    var node = head
+    while node != nil {
+      text += "\(node!.value)"
+      node = node!.next
+      if node != nil { text += "-> " }
+    }
+    return text
+    }
+}
+let ll = SingleLinkedList<Int>()
+ll.append(value: 1)
+ll.append(value: 2)
+ll.append(value: 4)
+ll.append(value: 9)
+print(ll.description)
+ll.deleteNode(position:2)
+print(ll.description)
+
