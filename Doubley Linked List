@@ -1,0 +1,256 @@
+
+
+
+public class Node {
+    public let value: Int
+    var next: Node? = nil
+    var previous: Node? = nil
+    public init(_ value: Int) {
+        self.value = value
+    }
+}
+extension Node: Equatable  {
+    public static func ==(lhs: Node, rhs: Node) -> Bool {
+        return lhs.value == rhs.value
+    }
+}
+extension Node: CustomStringConvertible {
+    public var description: String {
+        get {
+            return "Node(\(value))"
+        }
+    }
+}
+
+
+ public class LinkedList {
+   var head: Node?
+   private var tail: Node?
+
+  public var isEmpty: Bool {
+    return head == nil
+  }
+
+  //first
+  public var first: Node? {
+    return head
+  }
+
+  //last
+  public var last: Node? {
+    return tail
+  }
+//   //Append node to LinkedList
+  public func append(_ value: Int) {
+    let newNode = Node(value)
+    if let tailNode = tail {
+      newNode.previous = tailNode
+      tailNode.next = newNode
+    } else {
+      head = newNode
+    }
+    tail = newNode
+  }
+ 
+  //Find Node at Index
+  public func nodeAt(_ index: Int) -> Node? {
+    if index >= 0 {
+      var node = head
+      var i = index
+      while node != nil {
+        if i == 0 { return node }
+        i -= 1
+        node = node!.next
+      }
+    }
+    return nil
+  }
+    
+
+  //remove Node
+  public func remove(_ node: Node) -> Int {
+    let previousNode = node.previous
+    let nextNode = node.next
+
+    if let prev = previousNode {
+      prev.next = nextNode
+    } else {
+      head = nextNode
+    }
+    nextNode?.previous = previousNode
+
+    if nextNode == nil {
+      tail = previousNode
+    }
+
+    node.previous = nil
+    node.next = nil
+    
+    return node.value
+  }
+    
+    var count: Int {
+        if (head?.value == nil) {
+            return 0
+        }
+        else {
+            var current: Node? = head
+            var x: Int = 1
+            
+            //cycle through the list of items
+            while ((current?.next) != nil) {
+                current = current?.next!
+                x = x + 1
+            }
+            return x
+        }
+    }
+ 
+//     //remove from index
+    func remove(at index: Int) {
+        var toDeleteNode = nodeAt(index)
+        guard toDeleteNode != nil else {
+            print("Index out of bounds.")
+            return
+        }
+        
+        let previousNode = toDeleteNode?.previous
+        let nextNode = toDeleteNode?.next
+        
+        if previousNode == nil {
+            head = nextNode
+        }
+        
+        if toDeleteNode?.next == nil {
+            tail = previousNode
+        }
+        
+        previousNode?.next = nextNode
+        nextNode?.previous = previousNode
+        
+        toDeleteNode = nil
+    }
+    func removeAll()
+    {
+      head = nil
+      tail = nil
+    }
+ func insert(_ value: Int, at index: Int) {
+        let newNode = Node(value)
+        insert(newNode, at: index)
+    }
+    
+
+    public func insert(_ newNode: Node, at index: Int) {
+        if index == 0 {
+            newNode.next = head
+            head?.previous = newNode
+            head = newNode
+        } else {
+            let prev = nodeAt(index - 1)
+            let next = prev?.next
+            newNode.previous = prev
+            newNode.next = next
+            next?.previous = newNode
+            prev?.next = newNode
+        }
+    }
+ }
+
+public struct LinkedListIterator: IteratorProtocol {
+    public typealias Element = Node
+
+    /// The current node in the iteration
+    private var currentNode: Element?
+
+    fileprivate init(startNode: Element?) {
+        currentNode = startNode
+    }
+
+    public mutating func next() -> LinkedListIterator.Element? {
+        let node = currentNode
+        currentNode = currentNode?.next
+
+        return node
+    }
+}
+
+extension LinkedList: Sequence {
+    public typealias Iterator = LinkedListIterator
+
+    public func makeIterator() -> LinkedList.Iterator {
+        return LinkedListIterator(startNode: first)
+    }
+}
+extension LinkedList
+{
+      public func map(transform: (Node) -> Int) -> LinkedList {
+        var current: Node! = head
+        let results: LinkedList! = LinkedList()
+        var newKey: Int!
+        while current != nil {
+            
+            newKey = transform(current)
+            if newKey != nil {
+                results.append(newKey)
+            }
+            current = current.next
+        }
+        
+        return results
+
+    }
+
+     public func filter(predicate: (Int) -> Bool) -> LinkedList {
+        let result = LinkedList()
+        var node = head
+        while let nd = node {
+            if predicate(nd.value) {
+                result.append(nd.value)
+            }
+            node = nd.next
+        }
+        return result
+    }
+}
+extension LinkedList : CustomStringConvertible 
+{
+   public var description: String {
+       
+    var text = ""
+     for node in self
+     {
+       text += "\(node.value)"
+       if node.next != nil
+       {
+        text += "-> "
+       }
+     }
+    return text
+    }
+}
+     
+  let newNode = Node.init(-1)
+
+let ll = LinkedList()
+ll.append(6)
+ll.append(9)
+ll.append(1)
+ll.append(2)
+ll.append(4)
+print(ll.description)
+print(ll.first?.value ?? 0)
+print(ll.last?.value ?? 0)
+print(ll.nodeAt(3)?.value ?? 0)
+ll.insert(15,at: 3)
+print(ll.description)
+
+let mappedLL = ll.map{ val in 
+val.value * 10
+}
+let filterArray = mappedLL.filter { val in
+  val < 50
+}
+
+print(mappedLL)
+print(filterArray)
