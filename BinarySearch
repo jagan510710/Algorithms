@@ -1,0 +1,26 @@
+func binarySearch<T: Comparable>(_ a: [T],_ val: T) -> Int? {
+    var lower = 0
+    var upper = a.count - 1
+    while lower < upper {
+        let mid = lower + upper / 2
+        if a[mid] == val {
+            return mid
+        } else if a[mid] < val {
+            lower = mid + 1
+        } else {
+            upper = mid
+        }
+    }
+    return nil
+}
+
+let array =  [0,11,32,53,74,75]
+
+if let index =  binarySearch(array,75)
+{
+    print("Found at \(index)")
+}
+else
+{
+  print( "Not found")
+}
