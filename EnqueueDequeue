@@ -1,0 +1,50 @@
+
+ struct Deck <T> {
+     var items = [T]()
+    
+    mutating func enqueue(_ val: T) {
+        items.append(val)
+    }
+    
+    mutating func enqueueFront(_ val: T) {
+        items.insert(val, at: 0)
+    }
+    
+    mutating func dequeue() -> T?{
+        if items.isEmpty {
+            return nil
+        } else {
+            return items.removeFirst()
+        }
+    }
+    
+    mutating func dequeueBack() -> T? {
+        if items.isEmpty {
+            return nil
+        } else {
+            return items.removeLast()
+        }
+    }
+}
+extension Deck: CustomStringConvertible {
+    public var description: String {
+        get {
+            var str = ""
+            for item in items
+            {
+              str = "\(str) \(item)"
+            }
+            return "\n \(str) \n"
+        }
+    }
+}
+var deck = Deck<Int>()
+deck.enqueue(10)
+deck.enqueue(2)
+deck.enqueue(5)
+deck.enqueue(9)
+print(deck.description)
+print(deck.dequeue() ?? 0)
+print(deck.dequeueBack() ?? 0)
+deck.enqueueFront(7)
+print(deck.dequeue() ?? 0)
