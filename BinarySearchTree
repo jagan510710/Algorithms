@@ -1,0 +1,74 @@
+class Node<T> {
+    
+    var data: T
+    var leftNode: Node?
+    var rightNode: Node?
+    
+    init(data: T) {
+        self.data = data
+    }
+}
+
+class BinaryTree<T: Comparable> {
+    
+     var rootNode: Node<T>?
+    
+    func insert(_ val: T) {
+        let node = Node(data: val)
+        if let rootNode = self.rootNode {
+            self.insert(rootNode, node)
+        } else {
+            self.rootNode = node
+        }
+    }
+    
+     func insert(_ rootNode: Node<T>, _ node: Node<T>) {
+        if rootNode.data > node.data {
+            if let leftNode = rootNode.leftNode {
+                self.insert(leftNode, node)
+            } else {
+                rootNode.leftNode = node
+            }
+        } else {
+            if let rightNode = rootNode.rightNode {
+                self.insert(rightNode, node)
+            } else {
+                rootNode.rightNode = node
+            }
+        }
+    }
+}
+
+extension BinaryTree {
+    
+    func search(_ val: T) {
+        self.search(self.rootNode, val)
+    }
+    
+    private func search(_ rootNode: Node<T>?, _ val: T) {
+        
+        guard let rootNode = rootNode else {
+            print("NOT FOUND : \(val)")
+            return
+        }
+        
+        if val > rootNode.data {
+            self.search(rootNode.rightNode, val)
+        } else if val < rootNode.data {
+            self.search(rootNode.leftNode, val)
+        } else {
+           print("NODE FOUND : \(rootNode.data)")
+        }
+    }
+}
+
+let tree = BinaryTree<Int>()
+
+tree.insert(2)
+tree.insert(3)
+tree.insert(21)
+tree.insert(32)
+tree.insert(6)
+
+tree.search(21)
+tree.search(8)
