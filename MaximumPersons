@@ -1,0 +1,54 @@
+struct Person  
+{
+  var name:String
+  var arrTime : Int
+  var exitTime: Int
+  
+}
+
+let p1 = Person(name:"A",arrTime:9,exitTime:15)
+let p2 = Person(name:"B",arrTime:10,exitTime:15)
+let p3 = Person(name:"C",arrTime:15,exitTime:22)
+let p4 = Person(name:"D",arrTime:10,exitTime:19)
+let p5 = Person(name:"E",arrTime:16,exitTime:23)
+let p6 = Person(name:"E",arrTime:16,exitTime:23)
+var register = [p1,p2,p3,p4,p5,p6]
+print(register)
+let soretdArrival = register.sorted(by: { 
+  $0.arrTime  < $1.arrTime 
+})
+
+
+
+let soretdExit = register.sorted(by: { 
+  $0.exitTime  < $1.exitTime 
+})
+
+var arr:[(count: Int, time: Int)] = []
+
+var pCount = 0
+var i = 0 , j = 0
+while i < register.count 
+{
+    if soretdArrival[i].arrTime <= soretdExit[j].exitTime
+     {
+        pCount = pCount + 1
+        arr += [(count: pCount, time: soretdArrival[i].arrTime)]
+        i = i + 1
+
+     }
+     else
+     {
+
+        pCount = pCount - 1
+        arr += [(count: pCount, time: soretdArrival[i].arrTime)]
+        j = j + 1
+     }
+
+
+}
+arr.sort(by: {$0.count > $1.count})
+print("\n We have \(arr.first?.0 ?? 0) persons at \(arr.first?.1 ?? 0)")
+
+
+OUTPUT:  We have 4 persons at 15
