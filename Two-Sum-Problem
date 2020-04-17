@@ -1,0 +1,29 @@
+ extension Dictionary where Value: Equatable {
+    func allKeys(forValue val: Value) -> [Key] {
+        return self.filter { $1 == val }.map { $0.0 }
+    }
+}
+ var arr = [3,2,2,9,8]
+ var dict = [Int:Int]()
+ let sum = 10
+ var output : (Int,Int) = (0,0)
+for (index,val) in arr.enumerated()
+{
+     let v = sum - val
+     let keys = dict.allKeys(forValue: v)
+     if keys.count > 0
+     {
+       let s = keys.sorted().first
+       output = (s,index) as! (Int,Int)
+       break
+     }
+     else
+     {
+       dict[index] = val
+     }
+
+}
+  
+print(dict)
+
+print(output)
