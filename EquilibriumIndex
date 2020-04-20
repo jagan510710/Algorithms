@@ -1,0 +1,28 @@
+    let arr = [1,1, 5,-1, 2,1, 5, 3, 0,0]
+    var sum = arr.reduce(0){ $0 + $1}
+    var leftsum = 0
+    var index:Int?
+    for i in 0..<arr.count
+    {
+     sum =  sum - arr[i]
+
+        if (leftsum == sum)
+        {
+             index = i
+             break
+        }
+
+        leftsum = leftsum + arr[i]
+    }
+
+  if let index = index
+  {
+    print("Equilibrium index: \(index)")
+  }
+  else
+  {
+     print("Not found")
+
+  }
+
+
