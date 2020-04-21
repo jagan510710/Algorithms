@@ -1,0 +1,26 @@
+func longestSubstrings(_ s: String) -> [String] {
+    var str = ""
+    var allSubStringSet = Set<String>()    
+    for (i,c) in s.enumerated() {
+
+        if !str.contains(c) {
+            str.append(c)
+        } else {
+          allSubStringSet.insert(str)
+          str = String(c)
+        }
+        if i == s.count - 1
+        {
+          allSubStringSet.insert(str)
+        }
+    }
+    print(allSubStringSet)
+    if let max = allSubStringSet.max(by: {$1.count > $0.count}) 
+    {
+      return allSubStringSet.filter{$0.count == max.count}
+   
+    }
+    return []
+}
+
+print(longestSubstrings("abcxcdxwd"))
