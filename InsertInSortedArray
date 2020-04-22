@@ -1,0 +1,29 @@
+extension Array where Element : Comparable {
+    func insertionIndex(_ value: Element) -> Index {
+        var slice : ArraySlice = self[...]
+        while !slice.isEmpty {
+            let middle = slice.index(slice.startIndex, offsetBy: slice.count / 2)
+            if value < slice[middle] {
+                slice = slice[..<middle]
+            } else {
+                slice = slice[index(after: middle)...]
+            }
+            
+        }
+    
+        return slice.startIndex
+    }
+
+    mutating func sortAndInsertValue(_ value:Element)
+    {
+      self.sort{$0 < $1}
+      let index = self.insertionIndex(value)
+      self.insert(value, at: index) 
+
+    }
+}
+
+var array = [9,0,2,3,5,6,7,8,1]
+array.sortAndInsertValue(10)
+
+print(array)
